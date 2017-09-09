@@ -1,7 +1,7 @@
 # About
 When running Ubiquiti Networks mPower devices without the "mFi Controller" software the local log file of the device gets spammed with error messages. Additionally, for WiFi devices, it may happen that the WiFi connection drops for a few seconds.
 
-This tool is an attempt to stop those controller connection attempts.
+This tool stops those controller connections.
 
 # Warning
 Use at your own risk!
