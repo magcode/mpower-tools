@@ -3,6 +3,10 @@ When running Ubiquiti Networks mPower devices without the "mFi Controller" softw
 
 This tool is an attempt to stop those controller connection attempts.
 
+# Warning
+Use at your own risk!
+Use only with Firmware `MF.v2.1.11`.
+
 # Installation
 Use an SSH client and connect to your mPower device.
 Enter the following commands
