@@ -10,7 +10,7 @@ Enter the following commands
 
 ```
 mkdir /var/etc/persistent/mqtt
-wget --no-check-certificate https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt/install.sh -O /var/etc/persistent/mqtt/install.sh;chmod 755 /var/etc/persistent/mqtt/install.sh;/var/etc/persistent/mqtt/install.sh
+wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt/install.sh -O /var/etc/persistent/mqtt/install.sh;chmod 755 /var/etc/persistent/mqtt/install.sh;/var/etc/persistent/mqtt/install.sh
 
 save
 reboot
