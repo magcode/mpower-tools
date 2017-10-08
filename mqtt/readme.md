@@ -46,14 +46,21 @@ Once it is started you can control the sockets by publishing the payload "ON" or
 
 # Automatic start
 You might want to start both processes described above automatically once the mPower starts.
-For that create (or update!) the file `/var/etc/persistent/rc.poststart`
+For that create (or update!) the file `/var/etc/persistent/rc.poststart`. Don't forget the "&" at the end of lines.
 
 ```
 #!/bin/sh
 #
-/var/etc/persistent/mqtt/mqsub.sh -host <IP or hostname of MQTT Broker> -t <choosen MQTT topic> [-r <refresh in seconds>]
-/var/etc/persistent/mqtt/mqsub.sh -host <IP or hostname of MQTT Broker> -t <choosen MQTT topic>
+/var/etc/persistent/mqtt/mqpub.sh -host <IP or hostname of MQTT Broker> -t <choosen MQTT topic> [-r <refresh in seconds>] &
+/var/etc/persistent/mqtt/mqsub.sh -host <IP or hostname of MQTT Broker> -t <choosen MQTT topic> &
 ```
+
+Do not forget to save your changes after editing `rc.poststart`:
+```
+save
+```
+
+You can test now by rebooting the device (using `reboot`). Approx. 3 minutes after the mPower is up again, MQTT should be funtional.
 
 # Integrating into openHAB
 
