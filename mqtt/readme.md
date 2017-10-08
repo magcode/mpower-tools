@@ -16,7 +16,7 @@ save
 reboot
 ```
 
-# Receive status information
+# Receive status information via MQTT
 
 In order to start the MQTT publisher the following process needs to run on the mPower device:
 
@@ -41,10 +41,28 @@ In order to start the MQTT listener the following process needs to run on the mP
 Once it is started you can control the sockets by publishing the payload "ON" or "OFF" to the following topic:
 
 ```
-<topic choosen above>/<number of socket>/<POWER>
+<topic choosen above>/<number of socket>/POWER
 ```
 
-# Integrating into OpenHAB:
+# Automatic start
+You might want to start both processes described above automatically once the mPower starts.
+For that create (or update!) the file `/var/etc/persistent/rc.poststart`
+
+```
+#!/bin/sh
+#
+/var/etc/persistent/mqtt/mqsub.sh -host <IP or hostname of MQTT Broker> -t <choosen MQTT topic> [-r <refresh in seconds>]
+/var/etc/persistent/mqtt/mqsub.sh -host <IP or hostname of MQTT Broker> -t <choosen MQTT topic>
+```
+
+Do not forget to save your changes after editing `rc.poststart`:
+```
+save
+```
+
+# Integrating into openHAB
+
+This is an example how to define openHAB items:
 
 ```
 Switch switchMPLR1 "mPower livingroom socket 1" { mqtt=">[mosquitto:home/mpowerlr/1/POWER:command:*:default],<[mosquitto:home/mpowerlr/sensors:state:JSONPATH($.sensors[0].relayoh)]" }
