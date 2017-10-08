@@ -8,11 +8,11 @@ Use at your own risk!
 Use only with Firmware `MF.v2.1.11`.
 
 # Installation
-Use an SSH client and connect to your mPower device.
+Use a SSH client and connect to your mPower device.
 Enter the following commands
 
 ```
-wget --no-check-certificate https://raw.githubusercontent.com/magcode/mpower-tools/master/nocontroller.sh -O /etc/persistent/nocontroller.sh;chmod 755 /etc/persistent/nocontroller.sh;/etc/persistent/nocontroller.sh
+wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/nocontroller.sh -O /etc/persistent/nocontroller.sh;chmod 755 /etc/persistent/nocontroller.sh;/etc/persistent/nocontroller.sh
 save
 reboot
 ```

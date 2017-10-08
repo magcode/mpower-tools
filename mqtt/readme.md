@@ -5,7 +5,7 @@ This adds MQTT features to Ubiquiti Networks mPower devices.
 Use at your own risk!
 
 # Installation
-Use an SSH client and connect to your mPower device.
+Use a SSH client and connect to your mPower device.
 Enter the following commands
 
 ```
@@ -55,12 +55,18 @@ For that create (or update!) the file `/var/etc/persistent/rc.poststart`. Don't 
 /var/etc/persistent/mqtt/mqsub.sh -host <IP or hostname of MQTT Broker> -t <choosen MQTT topic> &
 ```
 
-Do not forget to save your changes after editing `rc.poststart`:
+Do not forget to make `rc.poststart` executable and save your changes after editing `rc.poststart`:
 ```
+chmod 755 /var/etc/persistent/mqtt/rc.poststart
 save
 ```
 
 You can test now by rebooting the device (using `reboot`). Approx. 3 minutes after the mPower is up again, MQTT should be funtional.
+If you don't like to reboot just type
+
+```
+/var/etc/persistent/mqtt/rc.poststart
+```
 
 # Integrating into openHAB
 
