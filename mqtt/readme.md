@@ -9,8 +9,8 @@ Use an SSH client and connect to your mPower device.
 Enter the following commands
 
 ```
-mkdir /etc/persistent/mqtt
-wget --no-check-certificate https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt/install.sh -O /etc/persistent/mqtt/install.sh;chmod 755 /etc/persistent/mqtt/install.sh;/etc/persistent/mqtt/install.sh
+mkdir /var/etc/persistent/mqtt
+wget --no-check-certificate https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt/install.sh -O /var/etc/persistent/mqtt/install.sh;chmod 755 /var/etc/persistent/mqtt/install.sh;/var/etc/persistent/mqtt/install.sh
 
 save
 reboot

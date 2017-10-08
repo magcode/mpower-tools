@@ -1,3 +1,4 @@
+#!/bin/sh
 export LD_LIBRARY_PATH=/var/etc/persistent/mqtt
 refresh=60
 
