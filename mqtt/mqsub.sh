@@ -1,11 +1,11 @@
+#!/bin/sh
 export LD_LIBRARY_PATH=/var/etc/persistent/mqtt
-refresh=60
 
 while test $# -gt 0; do
         case "$1" in
                 -h|--help)
                         echo ""
-                        echo "Ubiquiti Networks mPower MQTT publisher"
+                        echo "Ubiquiti Networks mPower MQTT listener"
                         echo " "
                         echo "options:"
                         echo "-h, --help                show brief help"
@@ -34,16 +34,6 @@ while test $# -gt 0; do
                         shift
                         ;;
 
-                -r)
-                        shift
-                        if test $# -gt 0; then
-                                refresh=$1
-                        else
-                                echo "no refresh time specified"
-                                exit 1
-                        fi
-                        shift
-                        ;;
                 *)
                         break
                         ;;
@@ -60,8 +50,26 @@ if [ -z "$topic" ]; then
     exit 0
 fi
 
+listen(){
+    /var/etc/persistent/mqtt/mosquitto_sub -h $mqtthost -v -t $topic/+/POWER | while read line; do
+        topic=`echo $line| cut -d" " -f1`
+        inputVal=`echo $line| cut -d" " -f2`
+        
+        port=`echo $topic | sed 's|.*/\([1-6]\)/POWER$|\1|'`
+        
+        if [ "$inputVal" == "ON" ] ; then
+			val=1
+		else
+            val=0
+        fi
+        
+        `echo $val > /proc/power/relay$port`
+    done
+}
 
-while sleep $refresh; 
-do 
-    /sbin/cgi /usr/www/mfi/sensors.cgi | tail -n +3 | sed  -e 's/"relay":1/"relay":1,"relayoh":"ON"/g' -e 's/"relay":0/"relay":0,"relayoh":"OFF"/g' | /var/etc/persistent/mqtt/mosquitto_pub -h $mqtthost -t $topic/sensors -s
-done
+ctrl_c() {
+  echo "Exiting..."
+}
+
+trap ctrl_c INT
+listen
