@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-echo "Installinh MQTT ..."
+echo "Installing MQTT ..."
 wget --no-check-certificate -q https://github.com/magcode/mpower-tools/blob/master/mqtt/libmosquitto.so.1?raw=true -O /var/etc/persistent/mqtt/libmosquitto.so.1
 wget --no-check-certificate -q https://github.com/magcode/mpower-tools/blob/master/mqtt/mosquitto_pub?raw=true -O /var/etc/persistent/mqtt/mosquitto_pub
 wget --no-check-certificate -q https://github.com/magcode/mpower-tools/blob/master/mqtt/mosquitto_sub?raw=true -O /var/etc/persistent/mqtt/mosquitto_sub

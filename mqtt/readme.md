@@ -55,11 +55,6 @@ For that create (or update!) the file `/var/etc/persistent/rc.poststart`
 /var/etc/persistent/mqtt/mqsub.sh -host <IP or hostname of MQTT Broker> -t <choosen MQTT topic>
 ```
 
-Do not forget to save your changes after editing `rc.poststart`:
-```
-save
-```
-
 # Integrating into openHAB
 
 This is an example how to define openHAB items:
