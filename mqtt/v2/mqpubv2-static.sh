@@ -1,6 +1,9 @@
 #!/bin/sh
 # homie spec (incomplete)
 echo "2.1.0" | $PUBBIN -h $mqtthost -t $topic/\$homie -s -r
+echo $devicename | $PUBBIN -h $mqtthost -t $topic/\$name -s -r
+echo $version | $PUBBIN -h $mqtthost -t $topic/\$fw/\$version -s -r
+
 echo "mPower MQTT" | $PUBBIN -h $mqtthost -t $topic/\$fw/\$name -s -r
 echo $version | $PUBBIN -h $mqtthost -t $topic/\$fw/\$version -s -r
 

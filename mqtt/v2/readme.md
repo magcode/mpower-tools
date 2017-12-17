@@ -1,6 +1,6 @@
 # About
 This adds MQTT features to Ubiquiti Networks mPower devices.
-This is version 2, which aims to comply with [homie MQTT convention](https://github.com/marvinroger/homie).
+This is version 2, which aims to comply with [homie MQTT convention](https://github.com/marvinroger/homie). The implementation of the convention is not complete yet.
 
 # Warning
 Use at your own risk!
@@ -19,18 +19,44 @@ reboot
 
 # Starting
 ```
-/var/etc/persistent/mqtt/v2/mqrunv2.sh -host <IP or hostname of MQTT Broker> -t <chosen MQTT topic> [-r <refresh in seconds>]
+/var/etc/persistent/mqtt/v2/mqrunv2.sh -host <IP or hostname of MQTT Broker> [-t <chosen MQTT topic>] [-r <refresh in seconds>]
 ```
 
-
+Default topic is `homie/[name of the mpower]`.
 
 # Published data
 
-The mPower device will publish messages to different topics.
-Example:
+The mPower device will publish messages every 60 seconds to different topics. Example:
 
 ```
+homie/mpower-1/port1/relay=0
+homie/mpower-1/port2/relay=1
+homie/mpower-1/port3/relay=0
+homie/mpower-1/port1/power=0.0
+homie/mpower-1/port2/power=7.2
+homie/mpower-1/port3/power=0.0
+homie/mpower-1/port1/energy=0
+homie/mpower-1/port2/energy=4
+homie/mpower-1/port3/energy=8
+homie/mpower-1/port1/voltage=0.0
+homie/mpower-1/port2/voltage=234.9
+homie/mpower-1/port3/voltage=0.0
+```
 
+Additionally - currently only at the start of the script - the device will also report:
+
+```
+homie/mpower-1/$homie=2.1.0
+homie/mpower-1/$name=mpower-1
+homie/mpower-1/$fw/$version=MF.v2.1.11-mq-0.2
+homie/mpower-1/$fw/$name=mPower=MQTT
+homie/mpower-1/$fw/$version=MF.v2.1.11-mq-0.2
+homie/mpower-1/$localip=192.168.1.26
+homie/mpower-1/$nodes=port1,port2,port3
+homie/mpower-1/$stats/uptime=2589629.67
+homie/mpower-1/port1/relay/$settable=true
+homie/mpower-1/port2/relay/$settable=true
+homie/mpower-1/port3/relay/$settable=true
 ```
 
 # Configuring transmitted node attributes

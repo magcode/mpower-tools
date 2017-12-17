@@ -19,8 +19,8 @@ while test $# -gt 0; do
                         echo "options:"
                         echo "-h, --help                show brief help"
                         echo "-host=HOSTNAME            MQTT host"
-                        echo "-t=TOPIC                  MQTT topic"
-                        echo "-r=REFRESH                refresh in seconds (defaults to 60)"
+                        echo "-t=TOPIC                  OPTIONAL: MQTT topic (defaults to homie/[device-name]"
+                        echo "-r=REFRESH                OPTIONAL: refresh in seconds (defaults to 60)"
                         
                         exit 0
                         ;;
@@ -65,18 +65,14 @@ if [ -z "$mqtthost" ]; then
     exit 0
 fi
 
-if [ -z "$topic" ]; then
-    echo "no topic specified"
-    exit 0
-fi
-
 # make sure the MQTT fast update request file exists
 tmpfile=$(mktemp /tmp/mqtmp.XXXXXXXXXX)
 echo 0 > $tmpfile
 
 # make our settings available to the subscripts
 export mqtthost
-export topic
+export devicename=$(cat /tmp/system.cfg | grep resolv.host.1.name | sed 's/.*=\(.*\)/\1/')
+export topic=homie/$devicename
 export refresh
 export tmpfile
 export version
