@@ -83,8 +83,8 @@ export version
 
 log "killing old instances"
 
-killall mqpub2.sh
+killall mqpubv2.sh
 
 log "starting pub and sub scripts"
 
-$BIN_PATH/v2/mqpub2.sh &
+$BIN_PATH/v2/mqpubv2.sh &
