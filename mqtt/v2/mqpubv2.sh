@@ -25,7 +25,6 @@ do
 	#echo "TMPFILE = " $TMPFASTUPDATE
     if [ -n "${TMPFASTUPDATE}" ]
 	then
-    	echo "fast update request: " $TMPFASTUPDATE
 		FASTUPDATE=$TMPFASTUPDATE
 		: > $tmpfile
 	fi
@@ -34,7 +33,6 @@ do
 	then
 		# fast update required, we do updates every second until the requested number of fast updates is done
 		FASTUPDATE=$((FASTUPDATE-1))
-		#echo "fast update"
 	else
 		# normal updates, decrement refresh counter until it is time
 		if [ $REFRESHCOUNTER -ne 0 ]

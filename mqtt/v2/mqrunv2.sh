@@ -65,8 +65,16 @@ if [ -z "$mqtthost" ]; then
     exit 0
 fi
 
+# lets stop any process from former start attempts
+log "killing old instances"
+killall mqpubv2.sh
+killall mqsubv2.sh
+pkill -f mosquitto_sub.*relay/set
+
 # make sure the MQTT fast update request file exists
+rm /tmp/mqtmp.*
 tmpfile=$(mktemp /tmp/mqtmp.XXXXXXXXXX)
+log "Using temp file "$tmpfile
 echo 0 > $tmpfile
 
 # make our settings available to the subscripts
@@ -77,10 +85,6 @@ export refresh
 export tmpfile
 export version
 
-log "killing old instances"
-
-killall mqpubv2.sh
-
 log "starting pub and sub scripts"
-
 $BIN_PATH/v2/mqpubv2.sh &
+$BIN_PATH/v2/mqsubv2.sh &
