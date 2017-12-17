@@ -20,7 +20,7 @@ while test $# -gt 0; do
                         echo "-h, --help                show brief help"
                         echo "-host=HOSTNAME            MQTT host"
                         echo "-t=TOPIC                  MQTT topic"
-                        echo "-r=REFRESH                refresh in seconds (default 60)"
+                        echo "-r=REFRESH                refresh in seconds (defaults to 60)"
                         
                         exit 0
                         ;;

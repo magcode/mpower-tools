@@ -1,5 +1,6 @@
 # About
 This adds MQTT features to Ubiquiti Networks mPower devices.
+This is version 2, which aims to comply with [homie MQTT convention](https://github.com/marvinroger/homie).
 
 # Warning
 Use at your own risk!
@@ -10,38 +11,46 @@ Enter the following commands
 
 ```
 mkdir /var/etc/persistent/mqtt
-wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt/install.sh -O /var/etc/persistent/mqtt/install.sh;chmod 755 /var/etc/persistent/mqtt/install.sh;/var/etc/persistent/mqtt/install.sh
+wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt/v2/installv2.sh -O /var/etc/persistent/mqtt/installv2.sh;chmod 755 /var/etc/persistent/mqtt/installv2.sh;/var/etc/persistent/mqtt/installv2.sh
 
 save
 reboot
 ```
 
-# Receive status information via MQTT
-
-In order to start the MQTT publisher the following process needs to run on the mPower device:
-
+# Starting
 ```
-/var/etc/persistent/mqtt/mqsub.sh -host <IP or hostname of MQTT Broker> -t <chosen MQTT topic> [-r <refresh in seconds>]
+/var/etc/persistent/mqtt/v2/mqrunv2.sh -host <IP or hostname of MQTT Broker> -t <chosen MQTT topic> [-r <refresh in seconds>]
 ```
 
-Once started the mPower device will publish a message to the topic `<chosen MQTT topic>/sensors` with a JSON payload each 60 seconds (60 seconds is the default).
+
+
+# Published data
+
+The mPower device will publish messages to different topics.
+Example:
 
 ```
-{"sensors":[{"port":1,"output":0,"power":0.0,"enabled":1,"current":0.0,"voltage":0.0,"powerfactor":0.0,"relay":0,"relayoh":"OFF","lock":0,"thismonth":0},{"port":2,"output":0,"power":0.0,"enabled":1,"current":0.0,"voltage":0.0,"powerfactor":0.0,"relay":0,"relayoh":"OFF","lock":0,"thismonth":0},{"port":3,"output":0,"power":0.0,"enabled":1,"current":0.0,"voltage":0.0,"powerfactor":0.0,"relay":0,"relayoh":"OFF","lock":0,"thismonth":0},{"port":4,"output":0,"power":0.0,"enabled":1,"current":0.0,"voltage":0.0,"powerfactor":0.0,"relay":0,"relayoh":"OFF","lock":0,"thismonth":0},{"port":5,"output":0,"power":0.0,"enabled":1,"current":0.0,"voltage":0.0,"powerfactor":0.0,"relay":0,"relayoh":"OFF","lock":0,"thismonth":0},{"port":6,"output":0,"power":0.0,"enabled":1,"current":0.0,"voltage":0.0,"powerfactor":0.0,"relay":0,"relayoh":"OFF","lock":0,"thismonth":0}],"status":"success"}
+
+```
+
+# Configuring transmitted node attributes
+You can suppress certain attributes (such as voltage) by editing the file `mpower-pub.cfg`. Set value to `0` if you dont need the data.
+
+```
+#enable (1) or disable (0) properties here
+relay=1
+power=1
+energy=1
+voltage=0
 ```
 
 # Control sockets via MQTT
+You can control the sockets by sending `0` or `1` to the topic `<topic chosen above>/port<number of socket>/relay`
 
-In order to start the MQTT listener the following process needs to run on the mPower device:
-
+# logfile
+The tool logs into standard messages log.
 ```
-/var/etc/persistent/mqtt/mqsub.sh -host <IP or hostname of MQTT Broker> -t <chosen MQTT topic>
-```
-
-Once it is started you can control the sockets by publishing the payload "ON" or "OFF" to the following topic:
-
-```
-<topic chosen above>/<number of socket>/POWER
+tail -f /var/log/messages
 ```
 
 # Automatic start
