@@ -71,7 +71,7 @@ voltage=0
 ```
 
 # Control sockets via MQTT
-You can control the sockets by sending `0` or `1` to the topic `<topic chosen above>/port<number of socket>/relay`
+You can control the sockets by sending `0` or `1` to the topic `<topic chosen above>/port<number of socket>/relay/set`
 
 # logfile
 The tool logs into standard messages log.
@@ -86,8 +86,7 @@ For that create (or update!) the file `/var/etc/persistent/rc.poststart`. Don't 
 ```
 #!/bin/sh
 #
-/var/etc/persistent/mqtt/mqpub.sh -host <IP or hostname of MQTT Broker> -t <chosen MQTT topic> [-r <refresh in seconds>] &
-/var/etc/persistent/mqtt/mqsub.sh -host <IP or hostname of MQTT Broker> -t <chosen MQTT topic> &
+/var/etc/persistent/mqtt/v2/mqrunv2.sh -host <IP or hostname of MQTT Broker> [-t <chosen MQTT topic>] [-r <refresh in seconds>] &
 ```
 
 Do not forget to make `rc.poststart` executable and save your changes after editing `rc.poststart`:
