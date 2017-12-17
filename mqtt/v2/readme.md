@@ -48,9 +48,8 @@ Additionally - currently only at the start of the script - the device will also 
 ```
 homie/mpower-1/$homie=2.1.0
 homie/mpower-1/$name=mpower-1
-homie/mpower-1/$fw/$version=MF.v2.1.11-mq-0.2
-homie/mpower-1/$fw/$name=mPower=MQTT
-homie/mpower-1/$fw/$version=MF.v2.1.11-mq-0.2
+homie/mpower-1/$fw/version=MF.v2.1.11-mq-0.2
+homie/mpower-1/$fw/name=mPower=MQTT
 homie/mpower-1/$localip=192.168.1.26
 homie/mpower-1/$nodes=port1,port2,port3
 homie/mpower-1/$stats/uptime=2589629.67

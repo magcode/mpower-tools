@@ -2,9 +2,9 @@
 # homie spec (incomplete)
 $PUBBIN -h $mqtthost -t $topic/\$homie -m "2.1.0" -r
 $PUBBIN -h $mqtthost -t $topic/\$name -m "$devicename" -r
-$PUBBIN -h $mqtthost -t $topic/\$fw/\$version -m "$version" -r
+$PUBBIN -h $mqtthost -t $topic/\$fw/version -m "$version" -r
 
-$PUBBIN -h $mqtthost -t $topic/\$fw/\$name -m "mPower MQTT" -r
+$PUBBIN -h $mqtthost -t $topic/\$fw/name -m "mPower MQTT" -r
 
 IPADDR=`ifconfig ath0 | grep 'inet addr' | cut -d ':' -f 2 | awk '{ print $1 }'`
 $PUBBIN -h $mqtthost -t $topic/\$localip -m "$IPADDR" -r
