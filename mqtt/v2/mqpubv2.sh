@@ -17,7 +17,7 @@ log "Publishing to $mqtthost with topic $topic"
 REFRESHCOUNTER=$refresh
 FASTUPDATE=0
 
-$BIN_PATH/v2/mqpub2-static.sh
+$BIN_PATH/v2/mqpubv2-static.sh
 while sleep 1; 
 do 
 	# refresh logic: either we need fast updates, or we count down until it's time
