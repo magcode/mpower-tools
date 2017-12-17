@@ -1,23 +1,22 @@
 #!/bin/sh
 # homie spec (incomplete)
-echo "2.1.0" | $PUBBIN -h $mqtthost -t $topic/\$homie -s -r
-echo $devicename | $PUBBIN -h $mqtthost -t $topic/\$name -s -r
-echo $version | $PUBBIN -h $mqtthost -t $topic/\$fw/\$version -s -r
+$PUBBIN -h $mqtthost -t $topic/\$homie -m "2.1.0" -r
+$PUBBIN -h $mqtthost -t $topic/\$name -m "$devicename" -r
+$PUBBIN -h $mqtthost -t $topic/\$fw/\$version -m "$version" -r
 
-echo "mPower MQTT" | $PUBBIN -h $mqtthost -t $topic/\$fw/\$name -s -r
-echo $version | $PUBBIN -h $mqtthost -t $topic/\$fw/\$version -s -r
+$PUBBIN -h $mqtthost -t $topic/\$fw/\$name -m "mPower MQTT" -r
 
 IPADDR=`ifconfig ath0 | grep 'inet addr' | cut -d ':' -f 2 | awk '{ print $1 }'`
-echo $IPADDR | $PUBBIN -h $mqtthost -t $topic/\$localip -s -r
+$PUBBIN -h $mqtthost -t $topic/\$localip -m "$IPADDR" -r
 
 NODES=`seq $PORTS | sed 's/\([0-9]\)/port\1/' |  tr '\n' , | sed 's/.$//'`
-echo $NODES | $PUBBIN -h $mqtthost -t $topic/\$nodes -s -r
+$PUBBIN -h $mqtthost -t $topic/\$nodes -m "$NODES" -r
 
 UPTIME=`awk '{print $1}' /proc/uptime`
-echo $UPTIME | $PUBBIN -h $mqtthost -t $topic/\$stats/uptime -s -r
+$PUBBIN -h $mqtthost -t $topic/\$stats/uptime -m "$UPTIME" -r
 
 # node infos
 for i in $(seq $PORTS)
 do
-    echo "true" | $PUBBIN -h $mqtthost -t $topic/port$i/relay/\$settable -s -r
+    $PUBBIN -h $mqtthost -t $topic/port$i/relay/\$settable -m "true" -r
 done
