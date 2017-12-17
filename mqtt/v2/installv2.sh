@@ -13,14 +13,14 @@ rm $LOCALSCRIPTDIR/*
 wget --no-check-certificate -q $BASEURL/v2/mqrunv2.sh -O $LOCALSCRIPTDIR/mqrunv2.sh
 wget --no-check-certificate -q $BASEURL/v2/mqpubv2-static.sh -O $LOCALSCRIPTDIR/mqpubv2-static.sh
 wget --no-check-certificate -q $BASEURL/v2/mqpubv2.sh -O $LOCALSCRIPTDIR/mqpubv2.sh
+wget --no-check-certificate -q $BASEURL/v2/mqsubv2.sh -O $LOCALSCRIPTDIR/mqsubv2.sh
 wget --no-check-certificate -q $BASEURL/v2/mpower-pub.cfg -O $LOCALSCRIPTDIR/mpower-pub.cfg
-
-#wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt/mqsub.sh -O /var/etc/persistent/mqtt/mqsub.sh
 
 chmod 755 $LOCALDIR/mosquitto_pub
 chmod 755 $LOCALDIR/mosquitto_sub
 chmod 755 $LOCALSCRIPTDIR/mqrunv2.sh
 chmod 755 $LOCALSCRIPTDIR/mqpubv2-static.sh
 chmod 755 $LOCALSCRIPTDIR/mqpubv2.sh
+chmod 755 $LOCALSCRIPTDIR/mqsubv2.sh
 chmod 755 $LOCALSCRIPTDIR/mpower-pub.cfg
 echo "Done!"
