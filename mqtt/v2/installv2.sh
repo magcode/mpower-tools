@@ -9,7 +9,7 @@ wget --no-check-certificate -q $BASEURL/libmosquitto.so.1?raw=true -O $LOCALDIR/
 wget --no-check-certificate -q $BASEURL/mosquitto_pub?raw=true -O $LOCALDIR/mosquitto_pub
 wget --no-check-certificate -q $BASEURL/mosquitto_sub?raw=true -O $LOCALDIR/mosquitto_sub
 mkdir -p $LOCALSCRIPTDIR
-rm $LOCALDIR/*
+rm $LOCALSCRIPTDIR/*
 wget --no-check-certificate -q $BASEURL/v2/mqrunv2.sh -O $LOCALSCRIPTDIR/mqrunv2.sh
 wget --no-check-certificate -q $BASEURL/v2/mqpubv2-static.sh -O $LOCALSCRIPTDIR/mqpubv2-static.sh
 wget --no-check-certificate -q $BASEURL/v2/mqpubv2.sh -O $LOCALSCRIPTDIR/mqpubv2.sh
