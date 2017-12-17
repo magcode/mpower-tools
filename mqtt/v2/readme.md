@@ -107,6 +107,14 @@ If you don't like to reboot just type
 This is an example how to define openHAB items:
 
 ```
-Switch switchMPLR1 "mPower livingroom socket 1" { mqtt=">[mosquitto:home/mpowerlr/1/POWER:command:*:default],<[mosquitto:home/mpowerlr/sensors:state:JSONPATH($.sensors[0].relayoh)]" }
-Number MPLR1Power "mPower livingroom socket 1 power [%.1f W]" { mqtt="<[mosquitto:home/mpowerlr/sensors:state:JSONPATH($.sensors[0].power)]" }
+Switch switchmp "My mpower switch" { mqtt=">[mosquitto:homie/mpower1/port1/relay/set:command:ON:1],>[mosquitto:homie/mpower1/port1/relay/set:command:OFF:0],<[mosquitto:homie/mpower1/port1/relay:state:MAP(mpowerrelay.map)]"}
+Number energymp "Energy consumption [%d Wh]" { mqtt="<[mosquitto:homie/mpower1/port1/energy:state:default]" }
+Number powermp "Current power [%.1f W]" { mqtt="<[mosquitto:homie/mpower1/port1/power:state:default]" }
+
+```
+
+You need a `mpowerrelay.map` file:
+```
+0=OFF
+1=ON
 ```
