@@ -2,7 +2,7 @@
 
 LOCALDIR="/var/etc/persistent/mqtt"
 LOCALSCRIPTDIR=$LOCALDIR/v2
-BASEURL="https://github.com/magcode/mpower-tools/blob/master/mqtt"
+BASEURL="https://raw.githubusercontent.com/magcode/mpower-tools/blob/master/mqtt"
 
 echo "Installing mPower MQTT v2 ..."
 wget --no-check-certificate -q $BASEURL/libmosquitto.so.1?raw=true -O $LOCALDIR/libmosquitto.so.1
