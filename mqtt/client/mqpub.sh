@@ -5,7 +5,7 @@ log() {
 }
 
 # read config file
-source $BIN_PATH/v2/mpower-pub.cfg
+source $BIN_PATH/client/mpower-pub.cfg
 export PUBBIN=$BIN_PATH/mosquitto_pub
 
 # identify type of mpower
@@ -17,7 +17,7 @@ log "Publishing to $mqtthost with topic $topic"
 REFRESHCOUNTER=$refresh
 FASTUPDATE=0
 
-$BIN_PATH/v2/mqpubv2-static.sh
+$BIN_PATH/client/mqpub-static.sh
 while sleep 1; 
 do 
 	# refresh logic: either we need fast updates, or we count down until it's time
@@ -74,7 +74,7 @@ do
         for i in $(seq $PORTS)
         do
             energy_val=`cat /proc/power/cf_count$((i))`
-            energy_val=$(awk -vn1="$energy_val" -vn2="0.1325" 'BEGIN{print n1*n2}')
+            energy_val=$(awk -vn1="$energy_val" -vn2="0.3125" 'BEGIN{print n1*n2}')
             energy_val=`printf "%.0f" $energy_val`
             $PUBBIN -h $mqtthost -t $topic/port$i/energy -m "$energy_val" -r
         done

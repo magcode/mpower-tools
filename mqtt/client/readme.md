@@ -11,7 +11,7 @@ Enter the following commands
 
 ```
 mkdir /var/etc/persistent/mqtt
-wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt/v2/installv2.sh -O /var/etc/persistent/mqtt/installv2.sh;chmod 755 /var/etc/persistent/mqtt/installv2.sh;/var/etc/persistent/mqtt/installv2.sh
+wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt/client/install-client.sh -O /var/etc/persistent/mqtt/install-client.sh;chmod 755 /var/etc/persistent/mqtt/install-client.sh;/var/etc/persistent/mqtt/install-client.sh
 
 save
 reboot
@@ -19,7 +19,7 @@ reboot
 
 # Starting
 ```
-/var/etc/persistent/mqtt/v2/mqrunv2.sh -host <IP or hostname of MQTT Broker> [-t <chosen MQTT topic>] [-r <refresh in seconds>]
+/var/etc/persistent/mqtt/client/mqrun.sh
 ```
 
 Default topic is `homie/[name of the mpower]`.

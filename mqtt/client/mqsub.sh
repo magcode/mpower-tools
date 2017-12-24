@@ -6,7 +6,7 @@ log() {
 
 listen(){
 	log "MQTT listening..."
-    /var/etc/persistent/mqtt/mosquitto_sub -h $mqtthost -v -t $topic/+/relay/set | while read line; do
+    $BIN_PATH/mosquitto_sub -I $clientID -h $mqtthost -v -t $topic/+/relay/set | while read line; do
         rxtopic=`echo $line| cut -d" " -f1`
         inputVal=`echo $line| cut -d" " -f2`
         
@@ -26,10 +26,3 @@ listen(){
 		echo 5 > $tmpfile		
     done
 }
-
-ctrl_c() {
-  log "MQTT listener now exiting..."
-}
-
-trap ctrl_c INT
-listen
