@@ -10,4 +10,13 @@ Use at your own risk!
 tbd
 
 # Configuration
+The file `mqtt.cfg' must be edited with the MQTT server information.
 The file `thermostat.cfg` must be edited with the MQTT topic information.
+
+# Starting
+
+Run
+
+```
+/etc/persistent/mqtt/thermostat/thermrun.sh
+```

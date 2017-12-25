@@ -39,6 +39,7 @@ startscript=$LOCALSCRIPTDIR/mqrun.sh
 if [ ! -f $poststart ]; then
     echo "$poststart not found, creating it ..."
     touch $poststart
+    echo "#!/bin/sh" >> $poststart
     chmod 755 $poststart
 fi
  
