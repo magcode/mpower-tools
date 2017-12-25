@@ -1,8 +1,8 @@
 # About
 This project provides some tools for Ubiquiti Networks mPower devices.
 
-[nocontroller](nocontroller)
+[nocontroller](nocontroller) Disables the controller connection attempts.
 
-[MQTT client](mqtt/client)
+[MQTT client](mqtt/client) Provides an MQTT client.
 
-[Thermostat](mqtt/thermostat)
+[Thermostat](mqtt/thermostat) A simple thermostat script.
