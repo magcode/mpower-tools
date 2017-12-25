@@ -21,7 +21,6 @@ if [ -z "$mqtthost" ]; then
 fi
 
 # lets stop any process from former start attempts
-log "killing old instances"
 $BIN_PATH/client/mqstop.sh
 
 # make sure the MQTT fast update request file exists
