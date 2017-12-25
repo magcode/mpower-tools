@@ -43,12 +43,12 @@ if [ ! -f $poststart ]; then
     chmod 755 $poststart
 fi
  
- if grep -q "$startscript" "$poststart"; then
+if grep -q "$startscript" "$poststart"; then
    echo "Found $poststart entry. File will not be changed"
- else
+else
    echo "Adding start command to $poststart"
    echo "$startscript" >> $poststart
- fi
+fi
  
 echo "Done!"
 echo "Please configure mqtt.cfg"
