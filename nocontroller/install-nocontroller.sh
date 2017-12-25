@@ -6,6 +6,8 @@ scriptdir=/var/etc/persistent/nocontroller
 
 mkdir -p $scriptdir
 
+# in case already installed, we need to unmount first
+umount /usr/etc/syswrapper.sh
 sed 's/pkill -9 mcad/exit 0\n        pkill -9 mcad/;s/pkill -9 wpa_supplicant/exit 0\n        pkill -9 wpa_supplicant/' /usr/etc/syswrapper.sh > $scriptdir/syswrapper.sh
 chmod 755 $scriptdir/syswrapper.sh
 
