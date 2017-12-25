@@ -1,14 +1,16 @@
 #!/bin/sh
 #
 echo "Installing nocontroller ..."
-sed 's/pkill -9 mcad/exit 0\n        pkill -9 mcad/;s/pkill -9 wpa_supplicant/exit 0\n        pkill -9 wpa_supplicant/' /usr/etc/syswrapper.sh > /etc/persistent/syswrapper.sh
-chmod 755 /etc/persistent/syswrapper.sh
 
 scriptdir=/var/etc/persistent/nocontroller
-startscript=$scriptdir/start.sh
-poststart=/etc/persistent/rc.poststart
 
 mkdir -p $scriptdir
+
+sed 's/pkill -9 mcad/exit 0\n        pkill -9 mcad/;s/pkill -9 wpa_supplicant/exit 0\n        pkill -9 wpa_supplicant/' /usr/etc/syswrapper.sh > $scriptdir/syswrapper.sh
+chmod 755 $scriptdir/syswrapper.sh
+
+startscript=$scriptdir/start.sh
+poststart=/etc/persistent/rc.poststart
 
 wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/nocontroller/start.sh -O $startscript
 chmod 755 $startscript
