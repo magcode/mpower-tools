@@ -21,8 +21,33 @@ reboot
 ```
 /var/etc/persistent/mqtt/client/mqrun.sh
 ```
+The script also starts automatically approx 3 minutes after booting the device (using rc.poststart).
 
-Default topic is `homie/[name of the mpower]`.
+# Stoping
+```
+/var/etc/persistent/mqtt/client/mqstop.sh
+```
+
+# Configuration
+## MQTT
+Edit the file `/var/etc/persistent/mqtt/client/mqtt.cfg` and configure your server, topic and refresh time. Setting topic and refresh is not mandatory. Defaults are 
+`topic=homie/[name of the mpower]` and `refresh=60` seconds
+
+```
+mqtthost=192.168.0.1
+#refresh=60
+#topic=my/topic
+```
+## Configuring transmitted node attributes
+You can suppress certain attributes (such as voltage) by editing the file `mpower-pub.cfg`. Set value to `0` if you dont need the data.
+
+```
+#enable (1) or disable (0) properties here
+relay=1
+power=1
+energy=1
+voltage=0
+```
 
 # Published data
 
@@ -58,17 +83,6 @@ homie/mpower-1/port2/relay/$settable=true
 homie/mpower-1/port3/relay/$settable=true
 ```
 
-# Configuring transmitted node attributes
-You can suppress certain attributes (such as voltage) by editing the file `mpower-pub.cfg`. Set value to `0` if you dont need the data.
-
-```
-#enable (1) or disable (0) properties here
-relay=1
-power=1
-energy=1
-voltage=0
-```
-
 # Control sockets via MQTT
 You can control the sockets by sending `0` or `1` to the topic `<topic chosen above>/port<number of socket>/relay/set`
 
@@ -76,29 +90,6 @@ You can control the sockets by sending `0` or `1` to the topic `<topic chosen ab
 The tool logs into standard messages log.
 ```
 tail -f /var/log/messages
-```
-
-# Automatic start
-You might want to start both processes described above automatically once the mPower starts.
-For that create (or update!) the file `/var/etc/persistent/rc.poststart`. Don't forget the "&" at the end of lines.
-
-```
-#!/bin/sh
-#
-/var/etc/persistent/mqtt/v2/mqrunv2.sh -host <IP or hostname of MQTT Broker> [-t <chosen MQTT topic>] [-r <refresh in seconds>] &
-```
-
-Do not forget to make `rc.poststart` executable and save your changes after editing `rc.poststart`:
-```
-chmod 755 /var/etc/persistent/mqtt/rc.poststart
-save
-```
-
-You can test now by rebooting the device (using `reboot`). Approx. 3 minutes after the mPower is up again, MQTT should be funtional.
-If you don't like to reboot just type
-
-```
-/var/etc/persistent/mqtt/rc.poststart
 ```
 
 # Integrating into openHAB
