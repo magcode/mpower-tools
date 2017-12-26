@@ -20,3 +20,11 @@ for i in $(seq $PORTS)
 do
     $PUBBIN -h $mqtthost -t $topic/port$i/relay/\$settable -m "true" -r
 done
+
+if [ $lock -eq 1 ]
+then
+    for i in $(seq $PORTS)
+    do
+        $PUBBIN -h $mqtthost -t $topic/port$i/lock/\$settable -m "true" -r
+    done
+fi

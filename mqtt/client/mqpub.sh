@@ -17,6 +17,7 @@ log "Publishing to $mqtthost with topic $topic"
 REFRESHCOUNTER=$refresh
 FASTUPDATE=0
 
+export lock=$lock
 $BIN_PATH/client/mqpub-static.sh
 while sleep 1; 
 do 
@@ -88,6 +89,16 @@ do
             voltage_val=`cat /proc/power/v_rms$((i))`
             voltage_val=`printf "%.1f" $voltage_val`
             $PUBBIN -h $mqtthost -t $topic/port$i/voltage -m "$voltage_val" -r
+        done
+    fi
+    
+    if [ $lock -eq 1 ]
+    then
+        # lock
+        for i in $(seq $PORTS)
+        do
+            port_val=`cat /proc/power/lock$((i))`
+            $PUBBIN -h $mqtthost -t $topic/port$i/lock -m "$port_val" -r
         done
     fi
 done
