@@ -46,6 +46,7 @@ You can suppress certain attributes (such as voltage) by editing the file `mpowe
 relay=1
 power=1
 energy=1
+lock=1
 voltage=0
 ```
 
@@ -81,10 +82,15 @@ homie/mpower-1/$stats/uptime=2589629.67
 homie/mpower-1/port1/relay/$settable=true
 homie/mpower-1/port2/relay/$settable=true
 homie/mpower-1/port3/relay/$settable=true
+homie/mpower-1/port1/lock/$settable=true
+homie/mpower-1/port2/lock/$settable=true
+homie/mpower-1/port3/lock/$settable=true
 ```
 
 # Control sockets via MQTT
 You can control the sockets by sending `0` or `1` to the topic `<topic chosen above>/port<number of socket>/relay/set`
+
+You can lock the sockets by sending `0` or `1` to the topic `<topic chosen above>/port<number of socket>/lock/set`
 
 # logfile
 The tool logs into standard messages log.
