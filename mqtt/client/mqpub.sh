@@ -17,7 +17,13 @@ log "Publishing to $mqtthost with topic $topic"
 REFRESHCOUNTER=$refresh
 FASTUPDATE=0
 
+
+export relay=$relay
+export power=$power
+export energy=$energy
+export voltage=$voltage
 export lock=$lock
+
 $BIN_PATH/client/mqpub-static.sh
 while sleep 1; 
 do 

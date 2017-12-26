@@ -15,9 +15,33 @@ $PUBBIN -h $mqtthost -t $topic/\$nodes -m "$NODES" -r
 UPTIME=`awk '{print $1}' /proc/uptime`
 $PUBBIN -h $mqtthost -t $topic/\$stats/uptime -m "$UPTIME" -r
 
+properties=relay
+
+if [ $energy -eq 1 ]
+then
+    properties=$properties,energy
+fi
+
+if [ $power -eq 1 ]
+then
+    properties=$properties,power
+fi
+
+if [ $voltage -eq 1 ]
+then
+    properties=$properties,voltage
+fi
+
+if [ $lock -eq 1 ]
+then
+    properties=$properties,lock
+fi
 # node infos
 for i in $(seq $PORTS)
 do
+    $PUBBIN -h $mqtthost -t $topic/port$i/\$name -m "Port $i" -r
+    $PUBBIN -h $mqtthost -t $topic/port$i/\$type -m "power switch" -r
+    $PUBBIN -h $mqtthost -t $topic/port$i/\$properties -m "$properties" -r
     $PUBBIN -h $mqtthost -t $topic/port$i/relay/\$settable -m "true" -r
 done
 
