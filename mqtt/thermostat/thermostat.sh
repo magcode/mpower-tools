@@ -19,9 +19,15 @@ do
    topics="$topics -t $current"
 done
 
-log "Starting thermostat with $channels channels and hysteresis=$hyster"
+log "Starting thermostat with $channels channels"
 log "listening to topics: $topics"
 
+# turn off all relays
+for i in `seq 1 $channels`;
+do
+	echo 0 > /proc/power/relay$i
+done		
+		
 listen(){
     $BIN_PATH/mosquitto_sub -I $clientID -h $mqtthost -v $topics | while read line; do
         topic=`echo $line| cut -d" " -f1`
@@ -39,10 +45,12 @@ listen(){
                 eval targetTemp$i=$val
             fi
             
+			eval hyster=\$hyster$i
             eval targetTemp=\$targetTemp$i
             eval actTemp=\$actTemp$i
             eval currentMode=\$currentMode$i
-            
+            eval roomName=\$roomName$i
+			
             withHyster1=$(awk -vn1="$targetTemp" -vn2="$hyster" 'BEGIN{print n1-n2}')
             withHyster2=$(awk -vn1="$targetTemp" -vn2="$hyster" 'BEGIN{print n1+n2}')
             result1=$(awk -vn1="$actTemp" -vn2="$withHyster1" 'BEGIN{print (n1<n2)?1:0 }')
@@ -51,20 +59,20 @@ listen(){
             debug=""
             if [ "$result1" -eq 1 ];then
                 if [ "$currentMode" -eq 0 ];then
-                    debug=`printf "Channel %s - ActTemp: %s TargetTemp: %s Too cold, start heating." "$i" "$actTemp" "$targetTemp"`
+                    debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Too cold, start heating." "$i" "$roomName" "$actTemp" "$targetTemp"`
                     eval currentMode$i=1
-                    #echo 1 > /proc/power/relay1
+                    echo 1 > /proc/power/relay$i
                 else
-                    debug=`printf "Channel %s - ActTemp: %s TargetTemp: %s Too cold, continue heating." "$i" "$actTemp" "$targetTemp"`
+                    debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Too cold, continue heating." "$i" "$roomName" "$actTemp" "$targetTemp"`
                 fi
                 $BIN_PATH/mosquitto_pub -h $mqtthost -t $debugTopic -m "$debug"
             elif [ "$result2" -eq 1 ];then
                 if [ "$currentMode" -eq 1 ];then
-                    debug=`printf "Channel %s - ActTemp: %s TargetTemp: %s Warm enough, stop heating." "$i" "$actTemp" "$targetTemp"`
+                    debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Warm enough, stop heating." "$i" "$roomName" "$actTemp" "$targetTemp"`
                     eval currentMode$i=0
-                    #echo 0 > /proc/power/relay1
+                    echo 0 > /proc/power/relay$i
                 else
-                    debug=`printf "Channel %s - ActTemp: %s TargetTemp: %s Warm enough, keep heating off." "$i" "$actTemp" "$targetTemp"`
+                    debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Warm enough, keep heating off." "$i" "$roomName" "$actTemp" "$targetTemp"`
                 fi
                 $BIN_PATH/mosquitto_pub -h $mqtthost -t $debugTopic -m "$debug"
             fi

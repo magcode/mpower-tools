@@ -19,9 +19,7 @@ export mqtthost
 export clientID="MPTHERM"
 
 # lets stop any process from former start attempts
-log "killing old instances"
-killall thermostat.sh
-pkill -f mosquitto_sub.*$clientID
+$BIN_PATH/thermostat/thermstop.sh
 
 log "starting sub script"
 $BIN_PATH/thermostat/thermostat.sh &
