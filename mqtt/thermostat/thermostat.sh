@@ -51,31 +51,34 @@ listen(){
             eval currentMode=\$currentMode$i
             eval roomName=\$roomName$i
 			
-            withHyster1=$(awk -vn1="$targetTemp" -vn2="$hyster" 'BEGIN{print n1-n2}')
-            withHyster2=$(awk -vn1="$targetTemp" -vn2="$hyster" 'BEGIN{print n1+n2}')
-            result1=$(awk -vn1="$actTemp" -vn2="$withHyster1" 'BEGIN{print (n1<n2)?1:0 }')
-            result2=$(awk -vn1="$actTemp" -vn2="$withHyster2" 'BEGIN{print (n1>n2)?1:0 }')
+            withHysterLow=$(awk -vn1="$targetTemp" -vn2="$hyster" 'BEGIN{print n1-n2}')
+            withHysterHigh=$(awk -vn1="$targetTemp" -vn2="$hyster" 'BEGIN{print n1+n2}')
+            belowHystLow=$(awk -vn1="$actTemp" -vn2="$withHysterLow" 'BEGIN{print (n1<n2)?1:0 }')
+            aboveHystHigh=$(awk -vn1="$actTemp" -vn2="$withHysterHigh" 'BEGIN{print (n1>n2)?1:0 }')
+			belowHystHigh=$(awk -vn1="$actTemp" -vn2="$withHysterHigh" 'BEGIN{print (n1<=n2)?1:0 }')
             
             debug=""
-            if [ "$result1" -eq 1 ];then
-                if [ "$currentMode" -eq 0 ];then
+			
+			# currently not heating
+			if [ "$currentMode" -eq 0 ];then
+				if [ "$belowHystLow" -eq 1 ];then
                     debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Too cold, start heating." "$i" "$roomName" "$actTemp" "$targetTemp"`
                     eval currentMode$i=1
                     echo 1 > /proc/power/relay$i
-                else
-                    debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Too cold, continue heating." "$i" "$roomName" "$actTemp" "$targetTemp"`
-                fi
-                $BIN_PATH/mosquitto_pub -h $mqtthost -t $debugTopic -m "$debug"
-            elif [ "$result2" -eq 1 ];then
-                if [ "$currentMode" -eq 1 ];then
-                    debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Warm enough, stop heating." "$i" "$roomName" "$actTemp" "$targetTemp"`
+				else
+					debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Warm enough, keep heating off." "$i" "$roomName" "$actTemp" "$targetTemp"`
+				fi
+			# currently heating
+			elif [ "$currentMode" -eq 1 ];then
+				if [ "$aboveHystHigh" -eq 1 ];then
+					debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Warm enough, stop heating." "$i" "$roomName" "$actTemp" "$targetTemp"`
                     eval currentMode$i=0
                     echo 0 > /proc/power/relay$i
-                else
-                    debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Warm enough, keep heating off." "$i" "$roomName" "$actTemp" "$targetTemp"`
-                fi
-                $BIN_PATH/mosquitto_pub -h $mqtthost -t $debugTopic -m "$debug"
-            fi
+				elif [ "$belowHystHigh" -eq 1 ];then
+					debug=`printf "Channel %s (%s) - ActTemp: %s TargetTemp: %s Too cold, continue heating." "$i" "$roomName" "$actTemp" "$targetTemp"`
+				fi
+			fi
+			$BIN_PATH/mosquitto_pub -h $mqtthost -t $debugTopic -m "$debug"
         done
     done
 }
