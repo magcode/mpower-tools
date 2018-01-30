@@ -1,7 +1,7 @@
 #!/bin/sh
 
 log() {
-	logger -s -t "mqtt" "$*"
+	logger -s -t "thermostat" "$*"
 }
 clientID="MPTHERM"
 log "killing old instances"
