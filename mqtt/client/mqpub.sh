@@ -50,7 +50,6 @@ do
 		else
 			# time to update
 			REFRESHCOUNTER=$refresh
-			#echo "normal update"
 		fi
 	fi
 
@@ -60,6 +59,10 @@ do
         for i in $(seq $PORTS)
         do
             relay_val=`cat /proc/power/relay$((i))`
+            if [ $relay_val -ne 1 ]
+            then
+              relay_val=0
+            fi
             $PUBBIN -h $mqtthost -t $topic/port$i/relay -m "$relay_val" -r
         done
     fi
