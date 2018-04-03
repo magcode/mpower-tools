@@ -26,12 +26,6 @@ else
     export auth="-u $mqttusername -P $mqttpassword"
 fi
 
-if [ -z "$mqttcafile" ]; then
-    export cafile=""
-else
-    export cafile="--cafile $mqttcafile"
-fi
-
 # lets stop any process from former start attempts
 $BIN_PATH/client/mqstop.sh
 

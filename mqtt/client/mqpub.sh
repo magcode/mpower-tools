@@ -63,7 +63,7 @@ do
             then
               relay_val=0
             fi
-            $PUBBIN -h $mqtthost $auth $cafile -t $topic/port$i/relay -m "$relay_val" -r
+            $PUBBIN -h $mqtthost $auth -t $topic/port$i/relay -m "$relay_val" -r
         done
     fi
     
@@ -74,7 +74,7 @@ do
         do
             power_val=`cat /proc/power/active_pwr$((i))`
             power_val=`printf "%.1f" $power_val`
-            $PUBBIN -h $mqtthost $auth $cafile -t $topic/port$i/power -m "$power_val" -r
+            $PUBBIN -h $mqtthost $auth -t $topic/port$i/power -m "$power_val" -r
         done
     fi
 
@@ -86,7 +86,7 @@ do
             energy_val=`cat /proc/power/cf_count$((i))`
             energy_val=$(awk -vn1="$energy_val" -vn2="0.3125" 'BEGIN{print n1*n2}')
             energy_val=`printf "%.0f" $energy_val`
-            $PUBBIN -h $mqtthost $auth $cafile -t $topic/port$i/energy -m "$energy_val" -r
+            $PUBBIN -h $mqtthost $auth -t $topic/port$i/energy -m "$energy_val" -r
         done
     fi
     
@@ -97,7 +97,7 @@ do
         do
             voltage_val=`cat /proc/power/v_rms$((i))`
             voltage_val=`printf "%.1f" $voltage_val`
-            $PUBBIN -h $mqtthost $auth $cafile -t $topic/port$i/voltage -m "$voltage_val" -r
+            $PUBBIN -h $mqtthost $auth -t $topic/port$i/voltage -m "$voltage_val" -r
         done
     fi
     
@@ -107,7 +107,7 @@ do
         for i in $(seq $PORTS)
         do
             port_val=`cat /proc/power/lock$((i))`
-            $PUBBIN -h $mqtthost $auth $cafile -t $topic/port$i/lock -m "$port_val" -r
+            $PUBBIN -h $mqtthost $auth -t $topic/port$i/lock -m "$port_val" -r
         done
     fi
 done

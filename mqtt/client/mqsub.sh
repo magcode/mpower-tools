@@ -5,7 +5,7 @@ log() {
 }
 
 log "MQTT listening..."
-$BIN_PATH/mosquitto_sub -I $clientID -h $mqtthost $auth $cafile -v -t $topic/+/+/set | while read line; do
+$BIN_PATH/mosquitto_sub -I $clientID -h $mqtthost $auth -v -t $topic/+/+/set | while read line; do
     rxtopic=`echo $line| cut -d" " -f1`
     inputVal=`echo $line| cut -d" " -f2`
     
