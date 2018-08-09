@@ -9,6 +9,8 @@ config=$scriptdir/bootstate.cfg
 applyscript="sleep 60; $scriptdir/apply-bootstate.sh"
 poststart=/etc/persistent/rc.poststart
 
+wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/bootstate/apply-bootstate.sh -O $applyscript
+
 if [ ! -f $config ]; then
     echo "$config not found, creating it ..."
     export PORTS=`cat /etc/board.inc | grep feature_power | sed -e 's/.*\([0-9]\+\);/\1/'`
@@ -35,4 +37,4 @@ fi
 
 echo "Done!"
 cfgmtd -w -p /etc/
-echo "Adapt your settings in $config and 'save' afterwards."
+echo "Adapt your settings in '$config' and call '/var/etc/persistent/bootstate/apply-bootstate.sh' afterwards."
