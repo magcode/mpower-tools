@@ -5,4 +5,6 @@ This project provides some tools for Ubiquiti Networks mPower devices.
 
 [MQTT client](mqtt/client) Provides an MQTT client.
 
+[bootstate](bootstate) Define which sockets are enabled during boot.
+
 [Thermostat](mqtt/thermostat) A simple thermostat script.
