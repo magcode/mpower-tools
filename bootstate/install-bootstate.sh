@@ -9,7 +9,7 @@ config=$scriptdir/bootstate.cfg
 applyscript="sleep 60; $scriptdir/apply-bootstate.sh"
 poststart=/etc/persistent/rc.poststart
 
-wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/bootstate/apply-bootstate.sh -O $applyscript
+wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/bootstate/apply-bootstate.sh -O $scriptdir/apply-bootstate.sh
 
 if [ ! -f $config ]; then
     echo "$config not found, creating it ..."
