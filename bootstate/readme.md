@@ -1,7 +1,7 @@
 # Why do I need this?
 
-You want to define that one or more ports of your mPower keeps OFF after reboot/power loss? Then this is for you.
-Inpired by https://community.ubnt.com/t5/mFi/mPower-default-outlet-state-on-boot-no-controller/td-p/1315851
+You want to define that one or more sockets of your mPower keeps OFF after reboot/power loss? Then this is for you.
+Inspired by https://community.ubnt.com/t5/mFi/mPower-default-outlet-state-on-boot-no-controller/td-p/1315851
 
 # What is this tool NOT doing
 
@@ -15,9 +15,11 @@ wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-
 
 This will prepare a config file for you: `/var/etc/persistent/bootstate/bootstate.cfg`.
 Edit this file and decide which ports shall be enabled or disabled when the device boots.
+
 Once done call `/var/etc/persistent/bootstate/apply-bootstate.sh`.
 
 # If you want to change the bootstate
 
-Edit your config file ``.
-Now call `/var/etc/persistent/bootstate/apply-bootstate.sh`
+Edit your config file `/var/etc/persistent/bootstate/bootstate.cfg`.
+
+Once done call `/var/etc/persistent/bootstate/apply-bootstate.sh`.
