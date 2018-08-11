@@ -47,7 +47,7 @@ if grep -q "$startscript" "$poststart"; then
    echo "Found $poststart entry. File will not be changed"
 else
    echo "Adding start command to $poststart"
-   echo "$startscript" >> $poststart
+   echo -e "$startscript" >> $poststart
 fi
  
 echo "Done!"

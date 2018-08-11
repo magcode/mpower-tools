@@ -22,7 +22,7 @@ wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-
 ```
 
 This will prepare a config file for you: `/var/etc/persistent/bootstate/bootstate.cfg`.
-Edit this file and decide which ports shall be enabled or disabled when the device boots.
+Edit this file and decide which ports shall be enabled (`on`) or disabled (`off`) when the device boots.
 
 Once done call `/var/etc/persistent/bootstate/apply-bootstate.sh`.
 
