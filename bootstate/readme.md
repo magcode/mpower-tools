@@ -8,7 +8,7 @@ Inspired by https://community.ubnt.com/t5/mFi/mPower-default-outlet-state-on-boo
 It does not revert the socket state as it was before the power loss.
 
 # Warning
-Even though you can disable a socket on boot, the socker *will* be turned for ~300ms. Make sure your connected devices can stand this short power stroke!!!
+Even though you can disable a socket on boot, the socket *will* be turned on for ~300ms. Make sure your connected devices can stand this short power stroke!!!
 
 Use at your own risk!
 Use only with Firmware `MF.v2.1.11`.
