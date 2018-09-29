@@ -57,4 +57,5 @@ fi
 echo "Done!"
 echo "Please configure mqtt.cfg"
 echo "Please configure mpower-pub.cfg"
+echo "Please configure led.cfg"
 echo "run 'save' command if done."
