@@ -52,6 +52,21 @@ lock=1
 voltage=0
 ```
 
+## LED
+You can configure the LED using the file `led.cfg`.
+
+```
+# set the led state using this configuration, none of the settings mandatory!
+# afterboot ... led state after starting
+# relay_off ... led state when all relays are OFF
+# relay_on  ... led state if one relay is ON
+# 0=OFF, 1=BLUE, 2=YELLOW, 3=BOTH, 4=ALTERNATE
+
+afterboot=3
+# relay_on=1
+# relay_off=0
+```
+
 # Published data
 
 The mPower device will publish messages every 60 seconds to different topics. Example:

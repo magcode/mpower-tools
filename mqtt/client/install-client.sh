@@ -25,6 +25,10 @@ if [ ! -f $LOCALSCRIPTDIR/mqtt.cfg ]; then
     wget --no-check-certificate -q $BASEURL/client/mqtt.cfg -O $LOCALSCRIPTDIR/mqtt.cfg
 fi
 
+if [ ! -f $LOCALSCRIPTDIR/led.cfg ]; then
+    wget --no-check-certificate -q $BASEURL/client/led.cfg -O $LOCALSCRIPTDIR/led.cfg
+fi
+
 chmod 755 $LOCALDIR/mosquitto_pub
 chmod 755 $LOCALDIR/mosquitto_sub
 chmod 755 $LOCALSCRIPTDIR/mqrun.sh
@@ -34,7 +38,7 @@ chmod 755 $LOCALSCRIPTDIR/mqsub.sh
 chmod 755 $LOCALSCRIPTDIR/mqstop.sh
 
 poststart=/etc/persistent/rc.poststart
-startscript=$LOCALSCRIPTDIR/mqrun.sh
+startscript="sleep 10; $LOCALSCRIPTDIR/mqrun.sh"
  
 if [ ! -f $poststart ]; then
     echo "$poststart not found, creating it ..."
