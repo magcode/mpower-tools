@@ -25,22 +25,33 @@ $BIN_PATH/mosquitto_sub -I $clientID -h $mqtthost $auth -v -t $topic/+/+/set | w
         if [ "$inputVal" == "1" ]
         then
             val=1
-            if [ -n "$relay_on" ];
+            # led handling
+            if [ -n "$relay_on" ]
             then
               echo $relay_on > /proc/led/status
             fi
         elif [ "$inputVal" == "0" ]
         then
             val=0
-            if [ -n "$relay_off" ];
-            then
-              echo $relay_off > /proc/led/status
-            fi
         else
             continue
         fi
         log "MQTT request received. $property control for port" $port "with value" $inputVal
         `echo $val > /proc/power/$property$port`
         echo 5 > $tmpfile
+        
+        # led handling for relay_off
+        if [ -n "$relay_off" ]
+        then
+          for i in $(seq $PORTS)
+          do
+              relay_val=`cat /proc/power/relay$((i))`  
+          done
+          # only set LED if all ports are OFF
+          if [ $relay_val -eq 0 ]
+          then
+            echo $relay_off > /proc/led/status
+          fi
+        fi
     fi        
 done

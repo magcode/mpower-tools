@@ -8,9 +8,6 @@ log() {
 source $BIN_PATH/client/mpower-pub.cfg
 export PUBBIN=$BIN_PATH/mosquitto_pub
 
-# identify type of mpower
-export PORTS=`cat /etc/board.inc | grep feature_power | sed -e 's/.*\([0-9]\+\);/\1/'`
-
 log "Found $((PORTS)) ports."
 log "Publishing to $mqtthost with topic $topic"
 
