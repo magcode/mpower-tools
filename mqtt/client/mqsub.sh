@@ -8,8 +8,10 @@ source $BIN_PATH/client/led.cfg
 # initially set the LED. If configured it can be switched along with the relay later
 if [ -n "$afterboot" ];
 then
-  echo $afterboot > /proc/led/status
+  echo $afterboot > /proc/led/status  
 fi
+# it should not blink
+echo 0 > /proc/led/freq
 
 log "MQTT listening..."
 $BIN_PATH/mosquitto_sub -I $clientID -h $mqtthost $auth -v -t $topic/+/+/set | while read line; do
@@ -43,12 +45,17 @@ $BIN_PATH/mosquitto_sub -I $clientID -h $mqtthost $auth -v -t $topic/+/+/set | w
         # led handling for relay_off
         if [ -n "$relay_off" ]
         then
+          all_relay_val=0
           for i in $(seq $PORTS)
           do
-              relay_val=`cat /proc/power/relay$((i))`  
+              relay_val=`cat /proc/power/relay$((i))`
+              if [ $relay_val -eq 1 ]
+              then
+                all_relay_val=1
+              fi
           done
           # only set LED if all ports are OFF
-          if [ $relay_val -eq 0 ]
+          if [ $all_relay_val -eq 0 ]
           then
             echo $relay_off > /proc/led/status
           fi
