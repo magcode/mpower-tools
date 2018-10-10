@@ -52,3 +52,5 @@ then
         $PUBBIN -h $mqtthost $auth -t $topic/port$i/lock/\$settable -m "true" -r
     done
 fi
+
+$PUBBIN -h $mqtthost $auth -t $topic/\$online -m "true" -r
