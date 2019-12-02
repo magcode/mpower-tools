@@ -41,7 +41,7 @@ export refresh
 export tmpfile
 export version
 # identify type of mpower
-export PORTS=`cat /etc/board.inc | grep feature_power | sed -e 's/.*\([0-9]\+\);/\1/'`
+export PORTS=`cat /etc/board.inc | grep board_shortname | sed -e 's/.*\([0-9]\).*/\1/'`
 
 log "starting pub and sub scripts"
 $BIN_PATH/client/mqpub.sh &
