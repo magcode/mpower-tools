@@ -7,6 +7,8 @@ Use at your own risk!
 
 # Installation
 Use a SSH client and connect to your mPower device.
+Internet access is required to use the automated installation process. If you don't have internet access you need to perform all steps of [install-client.sh](https://github.com/magcode/mpower-tools/blob/master/mqtt/client/install-client.sh) manually.
+
 Enter the following commands
 
 ```
