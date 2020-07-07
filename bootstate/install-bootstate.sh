@@ -7,7 +7,7 @@ scriptdir=/var/etc/persistent/bootstate
 mkdir -p $scriptdir
 config="$scriptdir/bootstate.cfg"
 applyscript="$scriptdir/apply-bootstate.sh"
-poststartscript="sleep 120; $applyscript"
+poststartscript="sleep 60; $applyscript"
 poststart=/etc/persistent/rc.poststart
 
 wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/bootstate/apply-bootstate.sh -O $applyscript
