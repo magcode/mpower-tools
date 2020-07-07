@@ -7,6 +7,6 @@ log() {
 config=/var/etc/persistent/bootstate/bootstate.cfg
 vpower=/etc/persistent/cfg/vpower_cfg
 
-cat $config >> $vpower
+cat $config > $vpower
 log "Applied bootstate"
 cfgmtd -w -p /etc/
