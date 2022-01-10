@@ -119,7 +119,7 @@ tail -f /var/log/messages
 
 # Integrating into openHAB
 
-This is an example how to define an openHAB items:
+This is an example how to define an openHAB thing:
 
 ```
 Thing mqtt:topic:switchTV "Switch TV" (mqtt:broker:mosquitto) {
