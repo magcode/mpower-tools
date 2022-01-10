@@ -119,17 +119,19 @@ tail -f /var/log/messages
 
 # Integrating into openHAB
 
-This is an example how to define openHAB items:
+This is an example how to define an openHAB items:
 
 ```
-Switch switchmp "My mpower switch" { mqtt=">[mosquitto:homie/mpower1/port1/relay/set:command:ON:1],>[mosquitto:homie/mpower1/port1/relay/set:command:OFF:0],<[mosquitto:homie/mpower1/port1/relay:state:MAP(mpowerrelay.map)]"}
-Number energymp "Energy consumption [%d Wh]" { mqtt="<[mosquitto:homie/mpower1/port1/energy:state:default]" }
-Number powermp "Current power [%.1f W]" { mqtt="<[mosquitto:homie/mpower1/port1/power:state:default]" }
-
+Thing mqtt:topic:switchTV "Switch TV" (mqtt:broker:mosquitto) {
+    Channels:
+        Type switch : switch "Switch" [ stateTopic="homie/mympower/port4/relay", on="1", off="0", commandTopic="homie/mympower/port4/relay/set"]
+        Type number : consumption "Consumption" [ stateTopic="homie/mympower/port4/energy"] 
+        Type number : power "Power" [ stateTopic="homie/mympower/port4/power"] 
+}
 ```
-
-You need a `mpowerrelay.map` file:
+and the according items:
 ```
-0=OFF
-1=ON
+Switch switchWZTV "Switch TV" { channel="mqtt:topic:switchTV:switch"}
+Number switchWZTVEnergy "Switch TV Energy [%d Wh]" { channel="mqtt:topic:switchTV:consumption"}
+Number switchWZTVPower "Switch TV Power [%.1f W]"  { channel="mqtt:topic:switchTV:power"}
 ```
