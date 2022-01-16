@@ -6,6 +6,11 @@ This is version 2, which aims to comply with [homie MQTT convention](https://git
 Use at your own risk!
 
 # Installation
+
+**Attention! Automated installation using the script below is broken at the moment. You need to copy files manually**
+
+(Reason is most likely because the mpower firmware/wget does not support newer TLS/SLL protocols required by github.)
+
 Use a SSH client and connect to your mPower device.
 Internet access is required to use the automated installation process. If you don't have internet access you need to perform all steps of [install-client.sh](https://github.com/magcode/mpower-tools/blob/master/mqtt/client/install-client.sh) manually.
 
