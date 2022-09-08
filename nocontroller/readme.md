@@ -8,11 +8,19 @@ Use at your own risk!
 Use only with Firmware `MF.v2.1.11`.
 
 # Installation
-Use a SSH client and connect to your mPower device.
+Download both install-nocontroller.sh and start.sh to your local device, and then copy them via
+SSH to your plug. An example for Linux or macOS would look like this:
+```
+cd /tmp
+wget https://raw.githubusercontent.com/magcode/mpower-tools/master/nocontroller/install-nocontroller.sh
+wget https://raw.githubusercontent.com/magcode/mpower-tools/master/nocontroller/start.sh
+scp -oKexAlgorithms=+diffie-hellman-group1-sha1 start.sh install-nocontroller.sh ubnt@MFI-IP:
+```
+Now we SSH into the plug and execute the install.
 Enter the following commands
 
 ```
-wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/nocontroller/install-nocontroller.sh -O /etc/persistent/install-nocontroller.sh;chmod 755 /etc/persistent/install-nocontroller.sh;/etc/persistent/install-nocontroller.sh
+sh ./install-nocontroller.sh
 save
 reboot
 ```

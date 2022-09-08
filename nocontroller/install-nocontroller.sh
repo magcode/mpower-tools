@@ -14,7 +14,7 @@ chmod 755 $scriptdir/syswrapper.sh
 startscript=$scriptdir/start.sh
 poststart=/etc/persistent/rc.poststart
 
-wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/nocontroller/start.sh -O $startscript
+mv ~/start.sh $startscript
 chmod 755 $startscript
 
 if [ ! -f $poststart ]; then
@@ -27,8 +27,9 @@ fi
 if grep -q "$startscript" "$poststart"; then
    echo "Found $poststart entry. File will not be changed"
 else
-   echo "Adding start command to $poststart"
-   echo -e "$startscript" >> $poststart
+   echo "Adding start command to $poststart as first line"
+   awk "NR==1{print; print \"$startscript\"} NR!=1" $poststart > /tmp/poststart
+   mv /tmp/poststart $poststart
 fi
  
 echo "Done!"
