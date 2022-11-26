@@ -15,4 +15,4 @@ Due to the ancient SSH daemon on the plugs modern SSH clients will not connect. 
 line flag `-oKexAlgorithms=+diffie-hellman-group1-sha1` to allow your client to connect. An example would look
 like:
 
-`ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 ubnt@192.168.2.20`
+`ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c 3des-cbc  -oHostKeyAlgorithms=+ssh-rsa,ssh-dss ubnt@192.168.2.20`
