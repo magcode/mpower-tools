@@ -7,19 +7,23 @@ Use at your own risk!
 
 # Installation
 
-**Attention! Automated installation using the script below is broken at the moment. You need to copy files manually**
+A linux system is required to install the MQTT client into your mPower.
+First add your public key to the mPower device.
+```
+ssh-copy-id -o KexAlgorithms=+diffie-hellman-group1-sha1 -o Ciphers=+aes256-cbc -o HostKeyAlgorithms=+ssh-dss -i ~/.ssh/id_rsa ubnt@<mpowerhost>
+```
 
-(Reason is most likely because the mpower firmware/wget does not support newer TLS/SLL protocols required by github.)
+If that works fine, execute the following commands on your linux machine:
+```
+wget -q https://raw.githubusercontent.com/magcode/mpower-tools/refs/heads/master/mqtt/client/install-client.sh
+chmod 777 install-client.sh
+./install-client.sh <mpowerhost>
+```
 
-Use a SSH client and connect to your mPower device.
-Internet access is required to use the automated installation process. If you don't have internet access you need to perform all steps of [install-client.sh](https://github.com/magcode/mpower-tools/blob/master/mqtt/client/install-client.sh) manually.
-
-Enter the following commands
+Now SSH into your mPower, change `mqtt.cfg`, `mpower-pub.cfg`, `led.cfg` and "save"
 
 ```
-mkdir /var/etc/persistent/mqtt
-wget --no-check-certificate -q https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt/client/install-client.sh -O /var/etc/persistent/mqtt/install-client.sh;chmod 755 /var/etc/persistent/mqtt/install-client.sh;/var/etc/persistent/mqtt/install-client.sh
-
+ssh <mpowerhost>
 save
 reboot
 ```

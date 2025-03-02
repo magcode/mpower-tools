@@ -12,7 +12,7 @@ LOCALDIR="/var/etc/persistent/mqtt"
 LOCALSCRIPTDIR=$LOCALDIR/client
 BASEURL="https://raw.githubusercontent.com/magcode/mpower-tools/master/mqtt"
 SSH_PARAMS="-o PubkeyAcceptedKeyTypes=+ssh-rsa -o KexAlgorithms=+diffie-hellman-group1-sha1 -o HostKeyAlgorithms=+ssh-dss -o Ciphers=+aes256-cbc -o StrictHostKeyChecking=accept-new"   
-SCP_PARAMS="-O $SSH_PARAMS"
+SCP_PARAMS="$SSH_PARAMS"
 
 echo "Installing mPower MQTT v2 ... to $TARGET"
 wget --no-check-certificate -q $BASEURL/libmosquitto.so.1?raw=true -O $WORK_DIR/libmosquitto.so.1
